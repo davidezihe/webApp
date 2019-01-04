@@ -10,7 +10,7 @@ app.set('view engine', 'pug');
 
 //Home Route
 app.get('/', function(req, res){
-  res.send('Hello World');
+  res.render('index');
 });
 
 //Start Server
