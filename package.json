@@ -1,0 +1,14 @@
+{
+  "name": "nodekb",
+  "version": "1.0.0",
+  "description": "Knowledge-based app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "author": "Uzoma David Ezihe",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
