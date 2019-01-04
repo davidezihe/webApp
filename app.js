@@ -17,7 +17,7 @@ app.get('/', function(req, res){
 
 //Add Route
 app.get('/articles/add', function(req, res){
-  res.render('add', {
+  res.render('add_article', {
     title:'Add Article'
   });
 });
