@@ -18,16 +18,24 @@ db.on('error', function(err){
 //Init App
 const app = express();
 
+//Bring in Models
+let Article = require('./models/article');
+
 //Load View Engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 //Home Route
 app.get('/', function(req, res){
-  
-  res.render('index', {
-    title:'Articles',
-    articles: articles
+  Article.find({}, function(err, articles){
+    if(err){
+      console.log(err);
+    } else {
+      res.render('index', {
+        title:'Articles',
+        articles: articles
+      });
+    }
   });
 });
 
