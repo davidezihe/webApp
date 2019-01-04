@@ -15,6 +15,13 @@ app.get('/', function(req, res){
   });
 });
 
+//Add Route
+app.get('/articles/add', function(req, res){
+  res.render('add', {
+    title:'Add Article'
+  });
+});
+
 //Start Server
 app.listen(3000, function(){
   console.log('Server started on port 3000.');
