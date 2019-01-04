@@ -2,6 +2,9 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 mongoose.connect('mongodb://localhost/nodekb');
 let db = mongoose.connection;
@@ -35,6 +38,38 @@ app.use(bodyParser.json());
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Express Session middleware
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}));
+
+//Express Messages Middleware
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+
+//Express Validator Middleware
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
+
 //Home Route
 app.get('/', function(req, res){
   Article.find({}, function(err, articles){
@@ -67,19 +102,34 @@ app.get('/articles/add', function(req, res){
 
 //Add Submit POST Route
 app.post('/articles/add', function(req, res){
-  let article = new Article();
-  article.title = req.body.title;
-  article.author = req.body.author;
-  article.body = req.body.body;
+  req.checkBody('title', 'Title is required').notEmpty();
+  req.checkBody('author', 'Author is required').notEmpty();
+  req.checkBody('body', 'Body is required').notEmpty();
 
-  article.save(function(err){
-    if(err){
-      console.log(err);
-      return;
-    } else {
-      res.redirect('/');
-    }
-  });
+  //Get Errors
+  let errors = req.validationErrors();
+
+  if(errors){
+      res.render('add_article', {
+        title:'Add Article',
+        errors:errors
+      });
+  } else {
+    let article = new Article();
+    article.title = req.body.title;
+    article.author = req.body.author;
+    article.body = req.body.body;
+
+    article.save(function(err){
+      if(err){
+        console.log(err);
+        return;
+      } else {
+        req.flash('success','Article Added');
+        res.redirect('/');
+      }
+    });
+  }
 });
 
 //Load Edit Form
@@ -106,6 +156,7 @@ app.post('/articles/edit/:id', function(req, res){
       console.log(err);
       return;
     } else {
+      req.flash('success', 'Article Updated');
       res.redirect('/');
     }
   });
