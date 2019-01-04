@@ -10,7 +10,9 @@ app.set('view engine', 'pug');
 
 //Home Route
 app.get('/', function(req, res){
-  res.render('index');
+  res.render('index', {
+    title:'Article'
+  });
 });
 
 //Start Server
