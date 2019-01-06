@@ -1,7 +1,9 @@
 extends layout
 
 block content
-  h1 #{title}
+  h1
+    u #{title}
+  p <font color="black"> Here are some articles from other users, documenting various aspects of their fitness journey which you may find useful!
   ul.list-group
     each article, i in articles
       li.list-group-item

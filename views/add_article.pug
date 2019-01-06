@@ -1,12 +1,15 @@
 extends layout
 
 block content
-  h1 #{title}
+  h1 
+    u #{title}
   form(method='POST', action='/articles/add')
     #form-group
       label Title:
       input.form-control(name='title', type='text')
+    br
     #form-group
-      label Body:
+      label Write your post and inspire others:
       textarea.form-control(name='body')
+    br
     input.btn.btn-primary(type='submit',value='Submit')

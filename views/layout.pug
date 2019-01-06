@@ -1,13 +1,13 @@
 doctype html
 html
   head
-    title Knowledge
+    title FirstTimeFitness
     link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet' href='/css/style.css')
   body
     nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
       .container
-        a.navbar-brand(href='/') FirstTimeFitness
+        a.navbar-brand(href='/') <font color="#3B9C9C"> FirstTimeFitness
         button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarResponsive', aria-controls='navbarResponsive', aria-expanded='false', aria-label='Toggle navigation')
           span.navbar-toggler-icon
         #navbarResponsive.collapse.navbar-collapse
@@ -18,7 +18,7 @@ html
                 span.sr-only (current)
             if user
               li.nav-item
-                a.nav-link(href='/articles/add') Add Article
+                a.nav-link(href='/articles/add') Write An Article
             li.nav-item
             if user 
               li 
@@ -34,9 +34,11 @@ html
           div(class="alert alert-danger") #{error.msg}
       block content
       br
+      br
       hr
       footer
-        p FirstTimeFitness
+        p <font color="#999966">
+          i FirstTimeFitness, helping you embark on your fitness journey!
     script(src='/bower_components/jquery/dist/jquery.js')
     script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
     script(src='/js/main.js')
